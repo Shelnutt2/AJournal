@@ -7,7 +7,7 @@
 #include "pdfview2.h"
 
 
-#define PDFVIEW_LOG_TAG "cx.hell.android.pdfview"
+#define PDFVIEW_LOG_TAG "com.shell.lib.pdf"
 #define PDFVIEW_MAX_PAGES_LOADED 16
 
 #define BITMAP_STORE_MAX_AGE  1
@@ -48,7 +48,7 @@ JNI_OnLoad(JavaVM *jvm, void *reserved) {
  * @param file_name file name to parse.
  */
 JNIEXPORT void JNICALL
-Java_cx_hell_android_lib_pdf_PDF_parseFile(
+Java_com_shell_lib_pdf_PDF_parseFile(
         JNIEnv *env,
         jobject jthis,
         jstring file_name,
@@ -101,7 +101,7 @@ Java_cx_hell_android_lib_pdf_PDF_parseFile(
  * Create pdf_t struct from opened file descriptor.
  */
 JNIEXPORT void JNICALL
-Java_cx_hell_android_lib_pdf_PDF_parseFileDescriptor(
+Java_com_shell_lib_pdf_PDF_parseFileDescriptor(
         JNIEnv *env,
         jobject jthis,
         jobject fileDescriptor,
@@ -152,7 +152,7 @@ Java_cx_hell_android_lib_pdf_PDF_parseFileDescriptor(
  * @return page count or -1 on error
  */
 JNIEXPORT jint JNICALL
-Java_cx_hell_android_lib_pdf_PDF_getPageCount(
+Java_com_shell_lib_pdf_PDF_getPageCount(
 		JNIEnv *env,
 		jobject this) {
 	pdf_t *pdf = NULL;
@@ -166,7 +166,7 @@ Java_cx_hell_android_lib_pdf_PDF_getPageCount(
 
 
 JNIEXPORT jintArray JNICALL
-Java_cx_hell_android_lib_pdf_PDF_renderPage(
+Java_com_shell_lib_pdf_PDF_renderPage(
         JNIEnv *env,
         jobject this,
         jint pageno,
@@ -185,7 +185,7 @@ Java_cx_hell_android_lib_pdf_PDF_renderPage(
 
     get_size(env, size, &width, &height);
 
-    __android_log_print(ANDROID_LOG_DEBUG, "cx.hell.android.pdfview", "jni renderPage(pageno: %d, zoom: %d, left: %d, top: %d, width: %d, height: %d) start",
+    __android_log_print(ANDROID_LOG_DEBUG, "com.shell.ajournal", "jni renderPage(pageno: %d, zoom: %d, left: %d, top: %d, width: %d, height: %d) start",
             (int)pageno, (int)zoom,
             (int)left, (int)top,
             (int)width, (int)height);
@@ -203,7 +203,7 @@ Java_cx_hell_android_lib_pdf_PDF_renderPage(
 
 
 JNIEXPORT jint JNICALL
-Java_cx_hell_android_lib_pdf_PDF_getPageSize(
+Java_com_shell_lib_pdf_PDF_getPageSize(
         JNIEnv *env,
         jobject this,
         jint pageno,
@@ -213,15 +213,15 @@ Java_cx_hell_android_lib_pdf_PDF_getPageSize(
 
     pdf = get_pdf_from_this(env, this);
     if (pdf == NULL) {
-        __android_log_print(ANDROID_LOG_ERROR, "cx.hell.android.pdfview", "this.pdf is null");
+        __android_log_print(ANDROID_LOG_ERROR, "com.shell.ajournal", "this.pdf is null");
         return 1;
     }
 
     error = get_page_size(pdf, pageno, &width, &height);
     if (error != 0) {
-        __android_log_print(ANDROID_LOG_ERROR, "cx.hell.android.pdfview", "get_page_size error: %d", (int)error);
+        __android_log_print(ANDROID_LOG_ERROR, "com.shell.ajournal", "get_page_size error: %d", (int)error);
         /*
-        __android_log_print(ANDROID_LOG_ERROR, "cx.hell.android.pdfview", "fitz error is:\n%s", fz_errorbuf);
+        __android_log_print(ANDROID_LOG_ERROR, "com.shell.ajournal", "fitz error is:\n%s", fz_errorbuf);
         */
         return 2;
     }
@@ -236,7 +236,7 @@ Java_cx_hell_android_lib_pdf_PDF_getPageSize(
 //  * Get document outline.
 //  */
 // JNIEXPORT jobject JNICALL
-// Java_cx_hell_android_lib_pdf_PDF_getOutlineNative(
+// Java_com_shell_lib_pdf_PDF_getOutlineNative(
 //         JNIEnv *env,
 //         jobject this) {
 //     int error;
@@ -267,14 +267,14 @@ Java_cx_hell_android_lib_pdf_PDF_getPageSize(
  * Free resources allocated in native code.
  */
 JNIEXPORT void JNICALL
-Java_cx_hell_android_lib_pdf_PDF_freeMemory(
+Java_com_shell_lib_pdf_PDF_freeMemory(
         JNIEnv *env,
         jobject this) {
     pdf_t *pdf = NULL;
 	jclass this_class = (*env)->GetObjectClass(env, this);
 	jfieldID pdf_field_id = (*env)->GetFieldID(env, this_class, "pdf_ptr", "I");
 
-    __android_log_print(ANDROID_LOG_DEBUG, "cx.hell.android.pdfview", "jni freeMemory()");
+    __android_log_print(ANDROID_LOG_DEBUG, "com.shell.ajournal", "jni freeMemory()");
 	pdf = (pdf_t*) (*env)->GetIntField(env, this, pdf_field_id);
 	(*env)->SetIntField(env, this, pdf_field_id, 0);
 
@@ -328,7 +328,7 @@ Java_cx_hell_android_lib_pdf_PDF_freeMemory(
 
 #if 0
 JNIEXPORT void JNICALL
-Java_cx_hell_android_pdfview_PDF_export(
+Java_com_shell_pdfview_PDF_export(
         JNIEnv *env,
         jobject this) {
     pdf_t *pdf = NULL;
@@ -428,7 +428,7 @@ wchar_t* widestrstr(wchar_t* haystack, int haystack_length, wchar_t* needle, int
 
 /* TODO: Specialcase searches for 7-bit text to make them faster */
 JNIEXPORT jobject JNICALL
-Java_cx_hell_android_lib_pdf_PDF_find(
+Java_com_shell_lib_pdf_PDF_find(
         JNIEnv *env,
         jobject this,
         jstring text,
@@ -564,7 +564,7 @@ Java_cx_hell_android_lib_pdf_PDF_find(
 //  * Return text of given page.
 //  */
 // JNIEXPORT jobject JNICALL
-// Java_cx_hell_android_lib_pdf_PDF_getText(
+// Java_com_shell_lib_pdf_PDF_getText(
 //         JNIEnv *env,
 //         jobject this,
 //         jint pageno) {
@@ -596,7 +596,7 @@ jobject create_find_result(JNIEnv *env) {
     static int jni_ids_cached = 0;
     jobject findResultObject = NULL;
 
-    findResultClass = (*env)->FindClass(env, "cx/hell/android/lib/pagesview/FindResult");
+    findResultClass = (*env)->FindClass(env, "com/shell//lib/pagesview/FindResult");
 
     if (findResultClass == NULL) {
         __android_log_print(ANDROID_LOG_ERROR, PDFVIEW_LOG_TAG, "create_find_result: FindClass returned NULL");
@@ -701,7 +701,7 @@ void add_find_result_marker(JNIEnv *env, jobject findResult, int x0, int y0, int
     static unsigned char jni_ids_cached = 0;
     if (!jni_ids_cached) {
         jclass findResultClass = NULL;
-        findResultClass = (*env)->FindClass(env, "cx/hell/android/lib/pagesview/FindResult");
+        findResultClass = (*env)->FindClass(env, "com/shell/lib/pagesview/FindResult");
         if (findResultClass == NULL) {
             __android_log_print(ANDROID_LOG_ERROR, PDFVIEW_LOG_TAG, "add_find_result_marker: FindClass returned NULL");
             return;
@@ -731,7 +731,7 @@ pdf_t* get_pdf_from_this(JNIEnv *env, jobject this) {
         jclass this_class = (*env)->GetObjectClass(env, this);
         field_id = (*env)->GetFieldID(env, this_class, "pdf_ptr", "I");
         field_is_cached = 1;
-        __android_log_print(ANDROID_LOG_DEBUG, "cx.hell.android.pdfview", "cached pdf_ptr field id %d", (int)field_id);
+        __android_log_print(ANDROID_LOG_DEBUG, "com.shell.ajournal", "cached pdf_ptr field id %d", (int)field_id);
     }
 	pdf = (pdf_t*) (*env)->GetIntField(env, this, field_id);
     return pdf;
@@ -752,9 +752,9 @@ int get_descriptor_from_file_descriptor(JNIEnv *env, jobject this) {
         jclass this_class = (*env)->GetObjectClass(env, this);
         field_id = (*env)->GetFieldID(env, this_class, "descriptor", "I");
         is_cached = 1;
-        __android_log_print(ANDROID_LOG_DEBUG, "cx.hell.android.pdfview", "cached descriptor field id %d", (int)field_id);
+        __android_log_print(ANDROID_LOG_DEBUG, "com.shell.ajournal", "cached descriptor field id %d", (int)field_id);
     }
-    __android_log_print(ANDROID_LOG_DEBUG, "cx.hell.android.pdfview", "will get descriptor field...");
+    __android_log_print(ANDROID_LOG_DEBUG, "com.shell.ajournal", "will get descriptor field...");
     return (*env)->GetIntField(env, this, field_id);
 }
 
@@ -768,7 +768,7 @@ void get_size(JNIEnv *env, jobject size, int *width, int *height) {
         width_field_id = (*env)->GetFieldID(env, size_class, "width", "I");
         height_field_id = (*env)->GetFieldID(env, size_class, "height", "I");
         fields_are_cached = 1;
-        __android_log_print(ANDROID_LOG_DEBUG, "cx.hell.android.pdfview", "cached Size fields");
+        __android_log_print(ANDROID_LOG_DEBUG, "com.shell.ajournal", "cached Size fields");
     }
     *width = (*env)->GetIntField(env, size, width_field_id);
     *height = (*env)->GetIntField(env, size, height_field_id);
@@ -791,7 +791,7 @@ void save_size(JNIEnv *env, jobject size, int width, int height) {
         width_field_id = (*env)->GetFieldID(env, size_class, "width", "I");
         height_field_id = (*env)->GetFieldID(env, size_class, "height", "I");
         fields_are_cached = 1;
-        __android_log_print(ANDROID_LOG_DEBUG, "cx.hell.android.pdfview", "cached Size fields");
+        __android_log_print(ANDROID_LOG_DEBUG, "com.shell.ajournal", "cached Size fields");
     }
     (*env)->SetIntField(env, size, width_field_id, width);
     (*env)->SetIntField(env, size, height_field_id, height);
@@ -835,8 +835,8 @@ pdf_t* parse_pdf_bytes(unsigned char *bytes, size_t len, jstring box_name) {
     pdf->xref = pdf_newxref();
     error = pdf_loadxref_mem(pdf->xref, bytes, len);
     if (error) {
-        __android_log_print(ANDROID_LOG_ERROR, "cx.hell.android.pdfview", "got err from pdf_loadxref_mem: %d", (int)error);
-        __android_log_print(ANDROID_LOG_ERROR, "cx.hell.android.pdfview", "fz errors:\n%s", fz_errorbuf);
+        __android_log_print(ANDROID_LOG_ERROR, "com.shell.ajournal", "got err from pdf_loadxref_mem: %d", (int)error);
+        __android_log_print(ANDROID_LOG_ERROR, "com.shell.ajournal", "fz errors:\n%s", fz_errorbuf);
         /* TODO: free resources */
         return NULL;
     }
@@ -851,7 +851,7 @@ pdf_t* parse_pdf_bytes(unsigned char *bytes, size_t len, jstring box_name) {
         authenticated = pdf_authenticatepassword(pdf->xref, "");
         if (!authenticated) {
             /* TODO: ask for password */
-            __android_log_print(ANDROID_LOG_ERROR, "cx.hell.android.pdfview", "failed to authenticate with empty password");
+            __android_log_print(ANDROID_LOG_ERROR, "com.shell.ajournal", "failed to authenticate with empty password");
             return NULL;
         }
     }
@@ -1028,8 +1028,8 @@ pdf_page* get_page(pdf_t *pdf, int pageno) {
 
         error = pdf_load_page(&page, pdf->xref, pageno);
         if (error) {
-            __android_log_print(ANDROID_LOG_ERROR, "cx.hell.android.pdfview", "pdf_loadpage -> %d", (int)error);
-            /* __android_log_print(ANDROID_LOG_ERROR, "cx.hell.android.pdfview", "fitz error is:\n%s", fz_errorbuf); */
+            __android_log_print(ANDROID_LOG_ERROR, "com.shell.ajournal", "pdf_loadpage -> %d", (int)error);
+            /* __android_log_print(ANDROID_LOG_ERROR, "com.shell.ajournal", "fitz error is:\n%s", fz_errorbuf); */
             return NULL;
         }
         pdf->pages[pageno] = page;
@@ -1344,7 +1344,7 @@ int convert_box_pdf_to_apv(pdf_t *pdf, int page, fz_bbox *bbox) {
 
 
 void pdf_android_loghandler(const char *m) {
-    __android_log_print(ANDROID_LOG_DEBUG, "cx.hell.android.pdfview.mupdf", m);
+    __android_log_print(ANDROID_LOG_DEBUG, "com.shell.ajournal.mupdf", m);
 }
 
 // #ifdef pro
@@ -1362,7 +1362,7 @@ void pdf_android_loghandler(const char *m) {
 //     if (outline == NULL) return NULL;
 // 
 //     if (outline_class == NULL) {
-//         outline_class = (*env)->FindClass(env, "cx/hell/android/lib/pdf/PDF$Outline");
+//         outline_class = (*env)->FindClass(env, "com/shell//lib/pdf/PDF$Outline");
 //         if (outline_class == NULL) {
 //             __android_log_print(ANDROID_LOG_ERROR, PDFVIEW_LOG_TAG, "can't find outline class");
 //             return NULL;
@@ -1392,14 +1392,14 @@ void pdf_android_loghandler(const char *m) {
 //             return NULL;
 //         }
 //         // __android_log_print(ANDROID_LOG_DEBUG, PDFVIEW_LOG_TAG, "got page field id");
-//         next_field_id = (*env)->GetFieldID(env, outline_class, "next", "Lcx/hell/android/lib/pdf/PDF$Outline;");
+//         next_field_id = (*env)->GetFieldID(env, outline_class, "next", "Lcom/shell//lib/pdf/PDF$Outline;");
 //         if (next_field_id == NULL) {
 //             (*env)->DeleteLocalRef(env, outline_class);
 //             __android_log_print(ANDROID_LOG_ERROR, PDFVIEW_LOG_TAG, "create_outline_recursive: couldn't get field id for Outline.next");
 //             return NULL;
 //         }
 //         // __android_log_print(ANDROID_LOG_DEBUG, PDFVIEW_LOG_TAG, "got down field id");
-//         down_field_id = (*env)->GetFieldID(env, outline_class, "down", "Lcx/hell/android/lib/pdf/PDF$Outline;");
+//         down_field_id = (*env)->GetFieldID(env, outline_class, "down", "Lcom/shell//lib/pdf/PDF$Outline;");
 //         if (down_field_id == NULL) {
 //             (*env)->DeleteLocalRef(env, outline_class);
 //             __android_log_print(ANDROID_LOG_ERROR, PDFVIEW_LOG_TAG, "create_outline_recursive: couldn't get field id for Outline.down");

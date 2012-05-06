@@ -13,7 +13,7 @@ import com.shell.lib.pagesview.FindResult;
  */
 public class PDF {
 	
-	private final static String TAG = "cx.hell.android.pdfview";
+	private final static String TAG = "com.shell.ajournal";
 	
 	static {
         System.loadLibrary("pdfview2");

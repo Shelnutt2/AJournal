@@ -62,7 +62,7 @@ import com.shell.lib.pdf.PDF;
 @SuppressWarnings("unused")
 public class OpenFileActivity extends Activity implements SensorEventListener {
 	
-	private final static String TAG = "cx.hell.android.pdfview";
+	private final static String TAG = "com.shell.ajournal";
 	
 	private final static int[] zoomAnimations = {
 		R.anim.zoom_disappear, R.anim.zoom_almost_disappear, R.anim.zoom

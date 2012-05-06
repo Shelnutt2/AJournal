@@ -19,7 +19,7 @@ public class N2EpdController {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static void exitA2Mode() {
-		System.err.println("APV::exitA2Mode");
+		System.err.println("AJournal::exitA2Mode");
 		try {
 			Class epdControllerClass = Class
 					.forName("android.hardware.EpdController");
@@ -58,7 +58,7 @@ public class N2EpdController {
 							epdControllerRegionClass,
 							epdControllerRegionParamsClass });
 			epdControllerSetRegionMethod
-					.invoke(null, new Object[] { "APV-ReadingView",
+					.invoke(null, new Object[] { "AJournal-ReadingView",
 							regionEnums[2], localRegionParams });
 
 		} catch (Exception e) {
@@ -68,7 +68,7 @@ public class N2EpdController {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static void enterA2Mode() {
-		System.err.println("APV::enterA2Mode");
+		System.err.println("AJournal::enterA2Mode");
 		try {
 			Class epdControllerClass = Class
 					.forName("android.hardware.EpdController");
@@ -107,7 +107,7 @@ public class N2EpdController {
 							epdControllerRegionClass,
 							epdControllerRegionParamsClass });
 			epdControllerSetRegionMethod
-					.invoke(null, new Object[] { "APV-ReadingView",
+					.invoke(null, new Object[] { "AJournal-ReadingView",
 							regionEnums[2], localRegionParams });
 
 			Thread.sleep(100L);
@@ -115,7 +115,7 @@ public class N2EpdController {
 					.newInstance(new Object[] { 0, 0, 600, 800, waveEnums[3],
 							14 }); // Wave = A2
 			epdControllerSetRegionMethod
-					.invoke(null, new Object[] { "APV-ReadingView",
+					.invoke(null, new Object[] { "AJournal-ReadingView",
 							regionEnums[2], localRegionParams });
 
 		} catch (Exception e) {
@@ -126,7 +126,7 @@ public class N2EpdController {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static void setGL16Mode() {
-		System.err.println("APV::setGL16Mode");
+		System.err.println("AJournal::setGL16Mode");
 		try {
 			/*
 			 * Loading the Epson EPD Controller Classes
@@ -182,7 +182,7 @@ public class N2EpdController {
 							epdControllerRegionParamsClass,
 							epdControllerModeClass });
 			epdControllerSetRegionMethod.invoke(null, new Object[] {
-					"APV-ReadingView", regionEnums[2], localRegionParams,
+					"AJournal-ReadingView", regionEnums[2], localRegionParams,
 					modeEnums[2] }); // Mode = ONESHOT_ALL
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -191,7 +191,7 @@ public class N2EpdController {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static void setDUMode() {
-		System.err.println("APV::setDUMode");
+		System.err.println("AJournal::setDUMode");
 		try {
 			Class epdControllerClass = Class
 					.forName("android.hardware.EpdController");
@@ -230,7 +230,7 @@ public class N2EpdController {
 							epdControllerRegionClass,
 							epdControllerRegionParamsClass });
 			epdControllerSetRegionMethod
-					.invoke(null, new Object[] { "APV-ReadingView",
+					.invoke(null, new Object[] { "AJournal-ReadingView",
 							regionEnums[2], localRegionParams });
 		} catch (Exception e) {
 			e.printStackTrace();
