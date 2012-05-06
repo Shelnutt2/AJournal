@@ -596,7 +596,7 @@ jobject create_find_result(JNIEnv *env) {
     static int jni_ids_cached = 0;
     jobject findResultObject = NULL;
 
-    findResultClass = (*env)->FindClass(env, "com/shell//lib/pagesview/FindResult");
+    findResultClass = (*env)->FindClass(env, "com/shell/lib/pagesview/FindResult");
 
     if (findResultClass == NULL) {
         __android_log_print(ANDROID_LOG_ERROR, PDFVIEW_LOG_TAG, "create_find_result: FindClass returned NULL");
@@ -1362,7 +1362,7 @@ void pdf_android_loghandler(const char *m) {
 //     if (outline == NULL) return NULL;
 // 
 //     if (outline_class == NULL) {
-//         outline_class = (*env)->FindClass(env, "com/shell//lib/pdf/PDF$Outline");
+//         outline_class = (*env)->FindClass(env, "com/shell/lib/pdf/PDF$Outline");
 //         if (outline_class == NULL) {
 //             __android_log_print(ANDROID_LOG_ERROR, PDFVIEW_LOG_TAG, "can't find outline class");
 //             return NULL;
@@ -1392,14 +1392,14 @@ void pdf_android_loghandler(const char *m) {
 //             return NULL;
 //         }
 //         // __android_log_print(ANDROID_LOG_DEBUG, PDFVIEW_LOG_TAG, "got page field id");
-//         next_field_id = (*env)->GetFieldID(env, outline_class, "next", "Lcom/shell//lib/pdf/PDF$Outline;");
+//         next_field_id = (*env)->GetFieldID(env, outline_class, "next", "Lcom/shell/lib/pdf/PDF$Outline;");
 //         if (next_field_id == NULL) {
 //             (*env)->DeleteLocalRef(env, outline_class);
 //             __android_log_print(ANDROID_LOG_ERROR, PDFVIEW_LOG_TAG, "create_outline_recursive: couldn't get field id for Outline.next");
 //             return NULL;
 //         }
 //         // __android_log_print(ANDROID_LOG_DEBUG, PDFVIEW_LOG_TAG, "got down field id");
-//         down_field_id = (*env)->GetFieldID(env, outline_class, "down", "Lcom/shell//lib/pdf/PDF$Outline;");
+//         down_field_id = (*env)->GetFieldID(env, outline_class, "down", "Lcom/shell/lib/pdf/PDF$Outline;");
 //         if (down_field_id == NULL) {
 //             (*env)->DeleteLocalRef(env, outline_class);
 //             __android_log_print(ANDROID_LOG_ERROR, PDFVIEW_LOG_TAG, "create_outline_recursive: couldn't get field id for Outline.down");
