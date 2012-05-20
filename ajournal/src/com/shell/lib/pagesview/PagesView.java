@@ -41,7 +41,7 @@ public class PagesView extends View implements
 	/**
 	 * Logging tag.
 	 */
-	private static final String TAG = "cx.hell.android.pdfview";
+	private static final String TAG = "com.shell.lib.pagesview";
 	
 	/* Experiments show that larger tiles are faster, but the gains do drop off,
 	 * and must be balanced against the size of memory chunks being requested.
