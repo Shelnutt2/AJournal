@@ -72,7 +72,7 @@
     android:layout_gravity="center_vertical"
     android:visibility="gone"    
     />
-    <TextView android:text="TextView" 
+    <TextView android:text="@+string/textview"
 	android:id="@+id/text" android:layout_width="fill_parent" 
 	android:layout_height="wrap_content"
 	android:minHeight="?android:attr/listPreferredItemHeight"

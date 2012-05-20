@@ -192,6 +192,8 @@ public class PagesView extends View implements
 	private boolean nook2 = false;
 	private LinearLayout zoomLayout = null;
 
+	//drawing export bitmap
+	private static Bitmap bm;
 
 	public PagesView(Activity activity) {
 		super(activity);
@@ -800,6 +802,7 @@ public class PagesView extends View implements
 	public boolean onTouch(View v, MotionEvent event) {
 		this.lastControlsUseMillis = System.currentTimeMillis();
 		Log.v(TAG, ""+event.getAction());
+		if(!com.shell.ajournal.OpenFileActivity.drawbtn){
 		if (!gestureDetector.onTouchEvent(event)) {
 			// Log.v(TAG, ""+event.getAction());
 			if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -865,6 +868,10 @@ public class PagesView extends View implements
 					zoom(this.mtZoomValue);
 				}
 			}						
+		   }
+		}
+		else if(com.shell.ajournal.OpenFileActivity.drawbtn){
+			com.shell.ajournal.OpenFileActivity.onTouch1(v, event);
 		}
 		return true;
 	}
@@ -1017,7 +1024,7 @@ public class PagesView extends View implements
 				for (Tile tile: renderedTiles.keySet()) {
 					if (tile.getPage() == i) {
 						Bitmap b = renderedTiles.get(tile); 
-						
+						setBm(b);
 						rect.left = (int)(x + tile.getX());
 						rect.top = (int)(y + tile.getY());
 						rect.right = rect.left + b.getWidth();
@@ -1506,5 +1513,14 @@ public class PagesView extends View implements
 
 	public void setZoomLayout(LinearLayout zoomLayout) {
 		this.zoomLayout = zoomLayout;
+	}
+
+	public static Bitmap getBm() {
+		return bm;
+	}
+
+	public void setBm(Bitmap bm) {
+		this.bm = bm;
+		Log.i(TAG, "bitmap is "+bm);
 	}
 }
