@@ -16,7 +16,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.PixelFormat;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -36,6 +41,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -51,6 +57,11 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.shell.ajournal.drawings.DrawingPath;
+import com.shell.ajournal.drawings.DrawingSurface;
+import com.shell.ajournal.drawings.brush.Brush;
+import com.shell.ajournal.drawings.brush.PenBrush;
 import com.shell.lib.pagesview.FindResult;
 import com.shell.lib.pagesview.PagesView;
 import com.shell.lib.pdf.PDF;
@@ -60,7 +71,7 @@ import com.shell.lib.pdf.PDF;
  * Document display activity.
  */
 @SuppressWarnings("unused")
-public class OpenFileActivity extends Activity implements SensorEventListener {
+public class OpenFileActivity extends Activity implements SensorEventListener, OnTouchListener {
 	
 	private final static String TAG = "com.shell.ajournal";
 	
@@ -235,6 +246,87 @@ public class OpenFileActivity extends Activity implements SensorEventListener {
         		fadePage();
         	}
         };
+        
+        drawingSurface = new DrawingSurface (this, null);
+        //Bitmap result = Bitmap.createBitmap(25, 25, Bitmap.Config.ARGB_8888);
+        //Canvas canvas = new Canvas(result);
+        //drawingSurface.draw(canvas);
+       // pcc.setLayoutParams(new LayoutParams(25, 25));
+        drawingSurface.setZOrderOnTop(true);
+        drawingSurface.getHolder().setFormat(PixelFormat.TRANSPARENT);
+        activityLayout.addView(drawingSurface);
+        
+        setCurrentPaint();
+        currentBrush = new PenBrush();
+        
+        
+        drawingSurface.setOnTouchListener(this);
+        drawingSurface.previewPath = new DrawingPath();
+        drawingSurface.previewPath.path = new Path();
+        drawingSurface.previewPath.paint = getPreviewPaint();
+
+
+    }
+    private DrawingSurface drawingSurface;
+    private DrawingPath currentDrawingPath;
+    private Paint currentPaint;
+
+    private Brush currentBrush;
+    
+    private void setCurrentPaint(){
+        currentPaint = new Paint();
+        currentPaint.setDither(true);
+        currentPaint.setColor(0xFFFFFF00);
+        currentPaint.setStyle(Paint.Style.STROKE);
+        currentPaint.setStrokeJoin(Paint.Join.ROUND);
+        currentPaint.setStrokeCap(Paint.Cap.ROUND);
+        currentPaint.setStrokeWidth(3);
+
+    }
+
+    private Paint getPreviewPaint(){
+        final Paint previewPaint = new Paint();
+        previewPaint.setColor(0xFFC1C1C1);
+        previewPaint.setStyle(Paint.Style.STROKE);
+        previewPaint.setStrokeJoin(Paint.Join.ROUND);
+        previewPaint.setStrokeCap(Paint.Cap.ROUND);
+        previewPaint.setStrokeWidth(3);
+        return previewPaint;
+    }
+
+
+
+
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
+            drawingSurface.isDrawing = true;
+
+            currentDrawingPath = new DrawingPath();
+            currentDrawingPath.paint = currentPaint;
+            currentDrawingPath.path = new Path();
+            currentBrush.mouseDown(currentDrawingPath.path, motionEvent.getX(), motionEvent.getY());
+            currentBrush.mouseDown(drawingSurface.previewPath.path, motionEvent.getX(), motionEvent.getY());
+
+            
+        }else if(motionEvent.getAction() == MotionEvent.ACTION_MOVE){
+            drawingSurface.isDrawing = true;
+            currentBrush.mouseMove( currentDrawingPath.path, motionEvent.getX(), motionEvent.getY() );
+            currentBrush.mouseMove(drawingSurface.previewPath.path, motionEvent.getX(), motionEvent.getY());
+
+
+        }else if(motionEvent.getAction() == MotionEvent.ACTION_UP){
+
+
+            currentBrush.mouseUp(drawingSurface.previewPath.path, motionEvent.getX(), motionEvent.getY());
+            drawingSurface.previewPath.path = new Path();
+            drawingSurface.addDrawingPath(currentDrawingPath);
+
+            currentBrush.mouseUp( currentDrawingPath.path, motionEvent.getX(), motionEvent.getY() );
+
+
+        }
+
+        return true;
     }
 
 	/** 
