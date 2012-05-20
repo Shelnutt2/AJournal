@@ -1,0 +1,70 @@
+Android Journal and Notetaking App
+
+		
+Overview
+		
+AJournal is heavily inspired by xournal and built upon the initial work of APV.
+
+Ajournal source can be found on https://github.com/Shelnutt2/AJournal
+Bug tickets are gladly excepted at th https://github.com/Shelnutt2/AJournal/issues
+		
+The Xournal project which inspired this can be found at http://xournal.sourceforge.net
+The APV project page which provided the initial reference and code for pdf support, is available at http://apv.googlecode.com/
+
+
+The project was build in eclipse, so you should be able to import it and build.
+To build the native libraries, navigate to the jni directory and then run
+ndk-build
+
+After which you should be able to build the apk and run it.
+
+License / Libraries
+
+AJournal is free software: you can redistribute it and/or modify
+it under the terms of the
+GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+AJournal uses following third party code:
+
+MuPDF library by Artifex Software, Inc. available at <a href="http://www.mupdf.com/">www.mupdf.com/</a></li>
+
+This software is based in part on the work of the Independent JPEG Group. JPEG library is available at <a href="http://www.ijg.org/">www.ijg.org</a>
+
+FreeType2 library available at <a href="http://www.freetype.org/">www.freetype.org</a></li>
+
+OpenJPEG library available at <a href="http://code.google.com/p/openjpeg/">http://code.google.com/p/openjpeg/</a>.
+OpenJPEG library is licensed under <a href="http://www.opensource.org/licenses/bsd-license.php">New BSD License</a>.
+
+jbig2dec library available at <a href="http://jbig2dec.sourceforge.net/">http://jbig2dec.sourceforge.net/</a>. jbig2dec is licensed
+under GPLv3.
+
+Droid font is Copyright (c) 2005-2008, The Android Open Source Project.
+Licensed under the <a href="http://www.apache.org/licenses/">Apache License, Version 2.0</a>.
+
+Nook2EpdController is copyright (c) 2011 by dairyknight (dairyknight@gmail.com).
+
+
+
+Ajournal uses following third party media>
+		
+
+btn_zoom_up and btn_zoom_down drawables that are part of Android Platform
+		
+		
+Credits
+		
+AJournal is developed by
+Seth Shelnutt Shelnutt2@gmail.com
+		
+		
+Some code referenced and pulled from APV was developed by
+		
+Maciej Pietrzak maciej@hell.cx
+Ludovic Drolez ldrolez@gmail.com
+Naseer Ahmed naseer.ahmed@gmail.com
+Riaz Ur Rahaman rahamanriaz@gmail.com
+Alexander Pruss arpruss@gmail.com
+
+
